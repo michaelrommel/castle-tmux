@@ -1,0 +1,10 @@
+#! /bin/bash
+
+if [[ -x "${HOME}/software/tmux/bin/tmux" ]]; then
+	TMUX=${HOME}/software/tmux/bin/tmux
+else
+	TMUX=tmux
+fi
+
+#shellcheck disable=2086,2048
+"${TMUX}" $*
