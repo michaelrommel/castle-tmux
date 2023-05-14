@@ -1,7 +1,7 @@
 #! /bin/bash
 
 TMUX_VERSION=$(tmux -V | sed -En "s/^tmux[^0-9]*([.0-9]+).*/\1/p")
-if [[ "$(echo "${TMUX_VERSION} < 3.2" | bc)" = 1 ]]; then
+if [[ "$(echo "${TMUX_VERSION} < 3.5" | bc)" = 1 ]]; then
 	echo "Installing build requirements for tmux"
 	sudo apt-get -y update
 	sudo apt-get -y install build-essential autoconf automake pkg-config \
