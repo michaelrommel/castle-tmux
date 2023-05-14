@@ -5,7 +5,7 @@ if [[ -z "${TMUX_VERSION}" || "$(echo "${TMUX_VERSION} < 3.5" | bc)" -eq 1 ]]; t
 	echo "Installing build requirements for tmux"
 	sudo apt-get -y update
 	sudo apt-get -y install build-essential autoconf automake pkg-config \
-		libevent-dev libncurses5-dev
+		libevent-dev libncurses5-dev byacc
 	echo "Recompiling tmux"
 	mkdir -p "${HOME}/software"
 	cd "${HOME}/software" || exit
