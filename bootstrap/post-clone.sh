@@ -1,6 +1,6 @@
 #! /bin/bash
 
-TMUX_VERSION=$(tmux -V | sed -En "s/^tmux[^0-9]*([.0-9]+).*/\1/p")
+TMUX_VERSION=$(tmux 2>/dev/null -V | sed -En "s/^tmux[^0-9]*([.0-9]+).*/\1/p")
 if [[ -z "${TMUX_VERSION}" || "$(echo "${TMUX_VERSION} < 3.5" | bc)" -eq 1 ]]; then
 	echo "Installing build requirements for tmux"
 	sudo apt-get -y update
