@@ -20,6 +20,7 @@ if [[ -z "${TMUX_VERSION}" || "$(echo "${TMUX_VERSION} < 3.5" | bc)" -eq 1 ]]; t
 fi
 
 echo "Configuring tmux plugins"
+sudo apt-get -y install gawk
 mkdir -p "${HOME}/.local/share/tmux/plugins"
 cd "${HOME}/.local/share/tmux/plugins" || exit
 git clone --depth=1 https://github.com/tmux-plugins/tpm "${HOME}/.local/share/tmux/plugins/tpm"
