@@ -16,8 +16,9 @@ if ! satisfied "3.5" "${TMUX_VERSION}"; then
 		fi
 	else
 		# gawk needed for plugins
-		desired=(build-essential autoconf automake pkg-config
-			libevent-dev libncurses5-dev byacc gawk)
+		desired=(build-essential autoconf automake pkg-config \
+			libevent-dev libncurses5-dev libutf8proc-dev \
+			libutf8proc2 byacc gawk)
 		missing=()
 		check_dpkged "missing" "${desired[@]}"
 		if [[ "${#missing[@]}" -gt 0 ]]; then
@@ -35,13 +36,13 @@ if ! satisfied "3.5" "${TMUX_VERSION}"; then
 	# optionally use a specific version
 	# git checkout 3.3a
 	sh autogen.sh
+	FLAGS="--enable-utf8proc"
 	if is_mac; then
-		FLAGS="--enable-utf8proc"
 		CPPFLAGS="-I/opt/homebrew/Cellar/utf8proc/2.8.0/include" \
 			LDFLAGS="-L/opt/homebrew/Cellar/utf8proc/2.8.0/lib" \
 			./configure ${FLAGS} --prefix="${HOME}/software/tmux"
 	else
-		./configure --prefix="${HOME}/software/tmux"
+		./configure ${FLAGS} --prefix="${HOME}/software/tmux"
 	fi
 	make
 	make install
