@@ -37,10 +37,18 @@ if ! satisfied "3.5" "${TMUX_VERSION}"; then
 	sh autogen.sh
 	FLAGS="--enable-utf8proc"
 	if is_mac; then
-		export PKG_CONFIG_PATH="/opt/homebrew/opt/ncurses/lib/pkgconfig"
-		CPPFLAGS="-I/opt/homebrew/Cellar/utf8proc/2.8.0/include -I/opt/homebrew/opt/ncurses/include" \
-			LDFLAGS="-L/opt/homebrew/Cellar/utf8proc/2.8.0/lib -L/opt/homebrew/opt/ncurses/lib" \
-			./configure ${FLAGS} --prefix="${HOME}/software/tmux"
+		ARCH=$(${UNAME} -m)
+		if [[ "${ARCH}" == "x86_64" ]]; then
+			export PKG_CONFIG_PATH="/usr/local/opt/ncurses/lib/pkgconfig"
+			CPPFLAGS="-I/usr/local/Cellar/utf8proc/2.9.0/include -I/usr/local/opt/ncurses/include" \
+				LDFLAGS="-L/usr/local/Cellar/utf8proc/2.9.0/lib -L/usr/local/opt/ncurses/lib" \
+				./configure ${FLAGS} --prefix="${HOME}/software/tmux"
+		else
+			export PKG_CONFIG_PATH="/opt/homebrew/opt/ncurses/lib/pkgconfig"
+			CPPFLAGS="-I/opt/homebrew/Cellar/utf8proc/2.8.0/include -I/opt/homebrew/opt/ncurses/include" \
+				LDFLAGS="-L/opt/homebrew/Cellar/utf8proc/2.8.0/lib -L/opt/homebrew/opt/ncurses/lib" \
+				./configure ${FLAGS} --prefix="${HOME}/software/tmux"
+		fi
 	else
 		./configure ${FLAGS} --prefix="${HOME}/software/tmux"
 	fi
