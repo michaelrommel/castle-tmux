@@ -35,7 +35,7 @@ if ! satisfied "3.5" "${TMUX_VERSION}"; then
 	# optionally use a specific version
 	# git checkout 3.3a
 	sh autogen.sh
-	FLAGS="--enable-utf8proc"
+	FLAGS="--enable-utf8proc --enable-sixel"
 	if is_mac; then
 		ARCH=$(${UNAME} -m)
 		if [[ "${ARCH}" == "x86_64" ]]; then
