@@ -64,10 +64,10 @@ main() {
   local sleep_time
   sleep_time=$(get_tmux_option "status-interval")
   local old_value
-  old_value=$(get_tmux_option "@network-bandwidth-previous-value")
-
-  if [ -z "$old_value" ]; then
-    eval "$(set_tmux_option "@network-bandwidth-previous-value" "-")"
+  old_value=$(get_tmux_option "@tmux-network-bandwidth-value")
+ 
+  if [ -z "$old_value" ] || [ "$old_value" == "-" ]; then
+	eval "$(set_tmux_option "@tmux-network-bandwidth-value" "+")"
     echo -n "Please wait..."
     return 0
   else
@@ -78,10 +78,15 @@ main() {
     read -r -a second_measure < <(get_bandwidth "$os")
     local download_speed=$(( (second_measure[0] - first_measure[0]) * 8/ sleep_time))
     local upload_speed=$(( (second_measure[1] - first_measure[1]) * 8 / sleep_time))
-    eval "$(set_tmux_option "@network-bandwidth-previous-value" "↓$(format_speed $download_speed) • ↑$(format_speed $upload_speed)")"
+	local form_dwn
+	form_dwn=$(format_speed $download_speed)
+	local form_up
+	form_up=$(format_speed $upload_speed)
+	# eval "$(set_tmux_option "@tmux-network-bandwidth-value" "+")"
   fi
 
-  echo -n "$(get_tmux_option "@network-bandwidth-previous-value")"
+  # echo -n "$(get_tmux_option "@network-bandwidth-previous-value")"
+  echo -n  "↓$form_dwn • ↑$form_up"
 }
 
 main
