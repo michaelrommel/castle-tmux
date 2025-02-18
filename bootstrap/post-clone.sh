@@ -6,7 +6,7 @@ TMUX_VERSION=$(tmux 2>/dev/null -V | sed -En "s/^tmux[^0-9]*([.0-9]+).*/\1/p")
 if ! satisfied "3.5" "${TMUX_VERSION}"; then
 	if is_mac; then
 		# gawk for plugins, utf8proc neeeded on mac
-		desired=(autoconf automake pkg-config utf8proc gawk)
+		desired=(autoconf automake pkg-config utf8proc gawk libevent)
 		missing=()
 		check_brewed "missing" "${desired[@]}"
 		if [[ "${#missing[@]}" -gt 0 ]]; then
